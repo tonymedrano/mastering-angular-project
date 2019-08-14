@@ -1,0 +1,19 @@
+<h2>Cosmic Top 20 marvel Superheroes</h2>
+<div>
+    <label>Hero name:
+      <input #superheroName />
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button (click)="add(superheroName.value); superheroName.value=''">
+      add
+    </button>
+  </div>
+<ul class="superheroes">
+  <li *ngFor="let superhero of superheroes">
+    <a routerLink="/detail/{{superhero.id}}">
+      <span class="badge">{{superhero.id}}</span> {{superhero.name}}
+    </a>
+    <button class="delete" title="delete superhero"
+  (click)="delete(superhero)">x</button>
+  </li>
+</ul>

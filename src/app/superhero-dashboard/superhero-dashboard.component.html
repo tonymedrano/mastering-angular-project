@@ -1,0 +1,9 @@
+<h3>Top Cosmic Marvel Superheroes</h3>
+<div class="grid grid-pad top-superheroes">
+  <a *ngFor="let superhero of superheroes" class="col-1-4"
+      routerLink="/detail/{{superhero.id}}">
+    <div class="module hero">
+      <h4>{{superhero.name}}</h4>
+    </div>
+  </a>
+</div>
