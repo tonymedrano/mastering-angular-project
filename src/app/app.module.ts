@@ -16,11 +16,13 @@ import { SuperheroDashboardComponent } from "./superhero-dashboard/superhero-das
 import { SuperheroSearchComponent } from "./superhero-search/superhero-search.component";
 
 //. Ads
-import { HeroJobAdComponent } from "./ads/hero-job-ad.component";
-import { AdBannerComponent } from "./ads/ad-banner.component";
-import { HeroProfileComponent } from "./ads/hero-profile.component";
-import { AdDirective } from "./ads/ad.directive";
-import { AdService } from "./ads/ad.service";
+import {
+  HeroJobAdComponent,
+  AdBannerComponent,
+  HeroProfileComponent,
+  AdDirective,
+  AdService
+} from "./ads";
 
 @NgModule({
   declarations: [
@@ -48,7 +50,7 @@ import { AdService } from "./ads/ad.service";
     })
   ],
   providers: [AdService],
-  entryComponents: [ HeroJobAdComponent, HeroProfileComponent ],
+  entryComponents: [HeroJobAdComponent, HeroProfileComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
