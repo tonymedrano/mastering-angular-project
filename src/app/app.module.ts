@@ -12,6 +12,7 @@ import { SuperheroDetailComponent } from "./superhero-detail/superhero-detail.co
 import { SuperheroMessagesComponent } from "./superhero-messages/superhero-messages.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { SuperheroDashboardComponent } from "./superhero-dashboard/superhero-dashboard.component";
+import { SuperheroSearchComponent } from './superhero-search/superhero-search.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SuperheroDashboardComponent } from "./superhero-dashboard/superhero-das
     SuperheroesComponent,
     SuperheroDetailComponent,
     SuperheroMessagesComponent,
-    SuperheroDashboardComponent
+    SuperheroDashboardComponent,
+    SuperheroSearchComponent
   ],
   imports: [
     BrowserModule,

@@ -70,6 +70,18 @@ export class SuperheroService {
     );
   }
 
+  /* GET heroes whose name contains search term */
+  searchSuperheroes(term: string): Observable<Superhero[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    return this.http.get<Superhero[]>(`${this.superheroesUrl}/?name=${term}`).pipe(
+      tap(_ => this.log(`found superheroes matching "${term}"`)),
+      catchError(this.handleError<Superhero[]>("searchSuperheroes", []))
+    );
+  }
+
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
     this.superheroMessageService.add(`SuperheroService: ${message}`);
