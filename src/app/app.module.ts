@@ -1,6 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
 import { HttpClientInMemoryWebApiModule } from "angular-in-memory-web-api";
@@ -28,6 +28,17 @@ import { FlyingSuperheroesComponent, FlyingSuperheroesImpureComponent } from './
 import { SuperheroAsyncMessageComponent } from './superhero-async-message/superhero-async-message.component';
 import { SuperherFetchJsonPipe } from './superher-fetch-json.pipe';
 import { SuperheroesFecthListComponent } from './superheroes-fecth-list/superheroes-fecth-list.component';
+import { SuperheroesProfileEditorComponent } from './superheroes-profile-editor/superheroes-profile-editor.component';
+import { NameProfileEditorComponent } from './name-profile-editor/name-profile-editor.component';
+
+export interface AppConfig {
+  apiEndpoint: string;
+  title: string;
+}
+export const SUPERHERO_DI_CONFIG: AppConfig = {
+  apiEndpoint: 'api.heroes.com',
+  title: 'Dependency Injection'
+};
 
 @NgModule({
   declarations: [
@@ -47,11 +58,14 @@ import { SuperheroesFecthListComponent } from './superheroes-fecth-list/superher
     FlyingSuperheroesImpureComponent,
     SuperheroAsyncMessageComponent,
     SuperherFetchJsonPipe,
-    SuperheroesFecthListComponent
+    SuperheroesFecthListComponent,
+    SuperheroesProfileEditorComponent,
+    NameProfileEditorComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
@@ -61,7 +75,10 @@ import { SuperheroesFecthListComponent } from './superheroes-fecth-list/superher
       dataEncapsulation: false
     })
   ],
-  providers: [AdService],
+  providers: [
+    AdService,
+  { provide: 'super', useValue: SUPERHERO_DI_CONFIG }
+  ],
   entryComponents: [HeroJobAdComponent, HeroProfileComponent],
   bootstrap: [AppComponent]
 })

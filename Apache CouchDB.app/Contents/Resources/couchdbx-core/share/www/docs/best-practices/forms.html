@@ -1,0 +1,407 @@
+<!--
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License.
+-->
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>9.2. Document submission using HTML Forms &mdash; Apache CouchDB 2.2 Documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+    <link rel="canonical" href="http://docs.couchdb.org/en/stable/best-practices/forms.html"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/rtd_theme.css" type="text/css" />
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="next" title="9.3. JavaScript development tips" href="jsdevel.html" />
+    <link rel="prev" title="9.1. Document Design Considerations" href="documents.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Apache CouchDB
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+<h2>Table of Contents</h2>
+
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">2. Installation &amp; First-Time Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config/index.html">3. Configuring CouchDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../replication/index.html">4. Replication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">5. CouchDB Maintenance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ddocs/index.html">6. Design Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../query-server/index.html">7. Query Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fauxton/index.html">8. Fauxton</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">9. Best Practices</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="documents.html">9.1. Document Design Considerations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">9.2. Document submission using HTML Forms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-html-form">9.2.1. The HTML form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-update-function">9.2.2. The update function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-output">9.2.3. Example output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jsdevel.html">9.3. JavaScript development tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nginx.html">9.4. nginx as a Reverse Proxy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">10. API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cluster/index.html">11. Cluster Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../json-structure.html">12. JSON Structure Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental.html">13. Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">14. Contributing to this Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">15. Release History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cve/index.html">16. Security Issues Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cve/index.html#reporting-new-security-problems-with-apache-couchdb">17. Reporting New Security Problems with Apache CouchDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">18. About CouchDB Documentation</a></li>
+</ul>
+
+            
+          
+<h2>Quick Reference</h2>
+<ul>
+<li><a href="../http-api.html">HTTP API Reference</a></li>
+<li><a href="../config-ref.html">Configuration Reference</a></li>
+</ul>
+
+
+<h2>Local Links</h2>
+<ul>
+<li><a href="../">Fauxton</a></li>
+</ul>
+
+
+<h2>More Help</h2>
+<ul>
+<li><a href="https://couchdb.apache.org/">CouchDB Homepage</a></li>
+<li><a href="https://couchdb.apache.org/#mailing-list">Mailing Lists</a></li>
+<li><a href="http://webchat.freenode.net/?channels=couchdb">IRC</a></li>
+<li><a href="https://github.com/apache/couchdb/issues">Issue Tracker</a></li>
+<li><a href="../download.html">Download Docs</a></li>
+</ul>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Apache CouchDB</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">9. Best Practices</a> &raquo;</li>
+        
+      <li>9.2. Document submission using HTML Forms</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/apache/couchdb-documentation/blob/master/src/best-practices/forms" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="document-submission-using-html-forms">
+<span id="best-practices-forms"></span><h1>9.2. Document submission using HTML Forms<a class="headerlink" href="#document-submission-using-html-forms" title="Permalink to this headline">¶</a></h1>
+<p>It is possible to write to a CouchDB document directly from an HTML form by
+using a document <a class="reference internal" href="../ddocs/ddocs.html#updatefun"><em>update function</em></a>. Here&#8217;s how:</p>
+<div class="section" id="the-html-form">
+<h2>9.2.1. The HTML form<a class="headerlink" href="#the-html-form" title="Permalink to this headline">¶</a></h2>
+<p>First, write an HTML form. Here&#8217;s a simple &#8220;Contact Us&#8221; form excerpt:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;/dbname/_design/ddocname/_update/contactform&quot;</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>Name:<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">id=</span><span class="s">&quot;name&quot;</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;mail&quot;</span><span class="nt">&gt;</span>Email:<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">id=</span><span class="s">&quot;mail&quot;</span> <span class="na">name=</span><span class="s">&quot;email&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;msg&quot;</span><span class="nt">&gt;</span>Message:<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;textarea</span> <span class="na">id=</span><span class="s">&quot;msg&quot;</span> <span class="na">name=</span><span class="s">&quot;message&quot;</span><span class="nt">&gt;&lt;/textarea&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre></div>
+</div>
+<p>Customize the <tt class="docutils literal"><span class="pre">/dbname/_design/ddocname/_update/contactform</span></tt> portion of the
+form action URL to reflect the exact path to your database, design document
+and update function (see below).</p>
+<p>As CouchDB
+<a class="reference internal" href="../ddocs/index.html#indexes"><em>no longer recommends the use of CouchDB-hosted web applications</em></a>
+, you may want to use a reverse proxy to expose CouchDB as a subdirectory of
+your web application.  If so, add that prefix to the <tt class="docutils literal"><span class="pre">action</span></tt> destination in
+the form.</p>
+<p>Another option is to alter CouchDB&#8217;s <a class="reference internal" href="../config/http.html#cors"><em>CORS</em></a> settings and use a
+cross-domain POST. <em>Be sure you understand all security implications before
+doing this!</em></p>
+</div>
+<div class="section" id="the-update-function">
+<h2>9.2.2. The update function<a class="headerlink" href="#the-update-function" title="Permalink to this headline">¶</a></h2>
+<p>Then, write an update function. This is the server-side JavaScript function
+that will receive the <tt class="docutils literal"><span class="pre">POST</span></tt>-ed data.</p>
+<p>The first argument to the function will be the document that is being processed
+(if it exists). Because we are using <tt class="docutils literal"><span class="pre">POST</span></tt> and not <tt class="docutils literal"><span class="pre">PUT</span></tt>, this should be
+empty in our scenario - but we should check to be sure. The <tt class="docutils literal"><span class="pre">POST</span></tt>-ed data
+will be passed as the second parameter to the function, along with any query
+parameters and the full request headers.</p>
+<p>Here&#8217;s a sample handler that extracts the form data, generates a document _id
+based on the email address and timestamp, and saves the document. It then
+returns a JSON success response back to the browser.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span><span class="p">(</span><span class="nx">doc</span><span class="p">,</span> <span class="nx">req</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">doc</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nx">doc</span><span class="p">,</span> <span class="nx">toJSON</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="o">:</span> <span class="s2">&quot;request already filed&quot;</span><span class="p">})]</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="o">!</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">form</span> <span class="o">&amp;&amp;</span> <span class="nx">request</span><span class="p">.</span><span class="nx">form</span><span class="p">.</span><span class="nx">email</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span><span class="kc">null</span><span class="p">,</span> <span class="nx">toJSON</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="o">:</span> <span class="s2">&quot;incomplete form&quot;</span><span class="p">})]</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span>
+    <span class="kd">var</span> <span class="nx">newdoc</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">form</span>
+    <span class="nx">newdoc</span><span class="p">.</span><span class="nx">_id</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">form</span><span class="p">.</span><span class="nx">email</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nx">date</span><span class="p">.</span><span class="nx">toISOString</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="nx">newdoc</span><span class="p">,</span> <span class="nx">toJSON</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="o">:</span><span class="s2">&quot;ok&quot;</span><span class="p">})]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Place the above function in your design document under the <tt class="docutils literal"><span class="pre">updates</span></tt> key.</p>
+<p>Note that this function does not attempt any sort of input validation or
+sanitization. That is best handled by a
+<a class="reference internal" href="../ddocs/ddocs.html#vdufun"><em>validate document update function</em></a> instead.  (A &#8220;VDU&#8221; will
+validate any document written to the database, not just those that use your
+update function.)</p>
+<p>If the first element passed to <tt class="docutils literal"><span class="pre">return</span></tt> is a document, the HTTP response
+headers will include <tt class="docutils literal"><span class="pre">X-Couch-Id</span></tt>, the <tt class="docutils literal"><span class="pre">_id</span></tt> value for the newly created
+document, and <tt class="docutils literal"><span class="pre">X-Couch-Update-NewRev</span></tt>, the <tt class="docutils literal"><span class="pre">_rev</span></tt> value for the newly
+created document. This is handy if your client-side code wants to access or
+update the document in a future call.</p>
+</div>
+<div class="section" id="example-output">
+<h2>9.2.3. Example output<a class="headerlink" href="#example-output" title="Permalink to this headline">¶</a></h2>
+<p>Here&#8217;s the worked sample above, using <tt class="docutils literal"><span class="pre">curl</span></tt> to simulate the form POST.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -X PUT localhost:5984/testdb/_design/myddoc -d <span class="s1">&#39;{ &quot;updates&quot;: { &quot;contactform&quot;: &quot;function(doc, req) { ... }&quot; } }&#39;</span>
+<span class="o">{</span><span class="s2">&quot;ok&quot;</span>:true,<span class="s2">&quot;id&quot;</span>:<span class="s2">&quot;_design/myddoc&quot;</span>,<span class="s2">&quot;rev&quot;</span>:<span class="s2">&quot;1-2a2b0951fcaf7287817573b03bba02ed&quot;</span><span class="o">}</span>
+
+<span class="nv">$ </span>curl --data <span class="s2">&quot;name=Lin&amp;email=lin@example.com&amp;message=I Love CouchDB&quot;</span> http://localhost:5984/testdb/_design/myddoc/_update/contactform
+*   Trying 127.0.0.1...
+* TCP_NODELAY <span class="nb">set</span>
+* Connected to localhost <span class="o">(</span>127.0.0.1<span class="o">)</span> port <span class="m">5984</span> <span class="o">(</span><span class="c">#1)</span>
+&gt; POST /testdb/_design/myddoc/_update/contactform HTTP/1.1
+&gt; Host: localhost:5984
+&gt; User-Agent: curl/7.59.0
+&gt; Accept: */*
+&gt; Content-Length: 53
+&gt; Content-Type: application/x-www-form-urlencoded
+&gt;
+* upload completely sent off: <span class="m">53</span> out of <span class="m">53</span> bytes
+&lt; HTTP/1.1 <span class="m">201</span> Created
+&lt; Content-Length: 16
+&lt; Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>utf-8
+&lt; Date: Thu, <span class="m">05</span> Apr <span class="m">2018</span> 19:56:42 GMT
+&lt; Server: CouchDB/2.2.0-948a1311c <span class="o">(</span>Erlang OTP/19<span class="o">)</span>
+&lt; X-Couch-Id: lin%40example.com_2018-04-05T19:51:22.278Z
+&lt; X-Couch-Request-ID: 03a5f4fbe0
+&lt; X-Couch-Update-NewRev: 1-34483732407fcc6cfc5b60ace48b9da9
+&lt; X-CouchDB-Body-Time: 0
+&lt;
+* Connection <span class="c">#1 to host localhost left intact</span>
+<span class="o">{</span><span class="s2">&quot;success&quot;</span>:<span class="s2">&quot;ok&quot;</span><span class="o">}</span>
+
+<span class="nv">$ </span>curl http://localhost:5984/testdb/lin<span class="se">\@</span>example.com_2018-04-05T19:51:22.278Z
+<span class="o">{</span><span class="s2">&quot;_id&quot;</span>:<span class="s2">&quot;lin@example.com_2018-04-05T19:51:22.278Z&quot;</span>,<span class="s2">&quot;_rev&quot;</span>:<span class="s2">&quot;1-34483732407fcc6cfc5b60ace48b9da9&quot;</span>,<span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;Lin&quot;</span>,<span class="s2">&quot;email&quot;</span>:<span class="s2">&quot;lin@example.com&quot;</span>,<span class="s2">&quot;message&quot;</span>:<span class="s2">&quot;I Love CouchDB&quot;</span><span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="jsdevel.html" class="btn btn-neutral float-right" title="9.3. JavaScript development tips" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="documents.html" class="btn btn-neutral" title="9.1. Document Design Considerations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Apache Software Foundation.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.2.0',
+            LANGUAGE:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<h3>Top Cosmic Marvel Superheroes</h3>
+<div class="grid grid-pad top-superheroes">
+  <a *ngFor="let superhero of superheroes" class="col-1-4"
+      routerLink="/detail/{{superhero.id}}">
+    <div class="module hero">
+      <h4>{{superhero.name}}</h4>
+    </div>
+  </a>
+</div>
+<h1>Reactive Forms</h1>
+<nav>
+  <a (click)="toggleEditor('name')">Name Editor</a>
+  <a (click)="toggleEditor('profile')">Profile Editor</a>
+</nav>
+<app-name-profile-editor *ngIf="showNameEditor">></app-name-profile-editor>
+<app-superheroes-profile-editor *ngIf="showProfileEditor"></app-superheroes-profile-editor>
+<app-superhero-search></app-superhero-search>
+<app-superheroes-fecth-list [allsuperheroes]="allsuperheroes"></app-superheroes-fecth-list>
+<app-flying-superheroes [superheroes]="superheroes"></app-flying-superheroes>
+<app-flying-superheroes-impure [allsuperheroes]="allsuperheroes"></app-flying-superheroes-impure>
