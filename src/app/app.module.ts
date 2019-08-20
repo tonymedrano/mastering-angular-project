@@ -23,6 +23,11 @@ import {
   AdDirective,
   AdService
 } from "./ads";
+import { FlyingSuperheroesPipe, FlyingSuperheroesImpurePipe } from './flying-superheroes.pipe';
+import { FlyingSuperheroesComponent, FlyingSuperheroesImpureComponent } from './flying-superheroes/flying-superheroes.component';
+import { SuperheroAsyncMessageComponent } from './superhero-async-message/superhero-async-message.component';
+import { SuperherFetchJsonPipe } from './superher-fetch-json.pipe';
+import { SuperheroesFecthListComponent } from './superheroes-fecth-list/superheroes-fecth-list.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +40,14 @@ import {
     AdBannerComponent,
     HeroJobAdComponent,
     HeroProfileComponent,
-    AdDirective
+    AdDirective,
+    FlyingSuperheroesPipe,
+    FlyingSuperheroesImpurePipe,
+    FlyingSuperheroesComponent,
+    FlyingSuperheroesImpureComponent,
+    SuperheroAsyncMessageComponent,
+    SuperherFetchJsonPipe,
+    SuperheroesFecthListComponent
   ],
   imports: [
     BrowserModule,

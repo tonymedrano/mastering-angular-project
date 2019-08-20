@@ -9,17 +9,28 @@ import { SuperheroService } from "../superhero.service";
   styleUrls: ["./superhero-dashboard.component.css"]
 })
 export class SuperheroDashboardComponent implements OnInit {
-  superheroes: Superhero[] = [];
+  superheroes: Superhero[];
+  allsuperheroes: Superhero[];
 
-  constructor(private superheroService: SuperheroService) {}
+  constructor(private superheroService: SuperheroService) {
+    this.superheroes = [];
+    this.allsuperheroes = [];
+  }
 
   ngOnInit() {
     this.getSuperHeroes();
+    this.getAllSuperHeroes();
   }
 
   getSuperHeroes(): void {
     this.superheroService
       .getSuperheroes()
       .subscribe(sp => (this.superheroes = sp.slice(1, 5)));
+  }
+
+  getAllSuperHeroes(): void {
+    this.superheroService
+      .getSuperheroes()
+      .subscribe(sp => this.allsuperheroes = sp);
   }
 }

@@ -1,0 +1,14 @@
+<h2>{{title}}</h2>
+<h4>Heroes who fly (piped):</h4>
+<div id="flyers">
+    <div *ngFor="let superhero of (allsuperheroes | flyingSuperheroesImpure)" [class.fly]="superhero.canFly">
+        {{superhero.id}}: <b>{{superhero.name}}</b> - can fly: <b>{{superhero.canFly}} </b>
+    </div>
+</div>
+
+<h4>All Superheroes (no pipe):</h4>
+<div id="all">
+    <div *ngFor="let superhero of allsuperheroes" [class.fly]="superhero.canFly">
+        {{superhero.id}}: <b>{{superhero.name}}</b> - can fly: <b>{{superhero.canFly}} </b>
+    </div>
+</div>
